@@ -1,4 +1,4 @@
-package com.saidus.snapanonym.presentation.presentation.adapter;
+package com.saidus.snapanonym.presentation.adapter;
 
 import android.content.Context;
 import android.util.Base64;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.saidus.snapanonym.R;
-import com.saidus.snapanonym.presentation.model.Snap;
+import com.saidus.snapanonym.model.Snap;
 
 import java.util.List;
 

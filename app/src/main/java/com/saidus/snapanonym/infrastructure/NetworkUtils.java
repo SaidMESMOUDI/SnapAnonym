@@ -1,4 +1,4 @@
-package com.saidus.snapanonym.presentation.infrastructure;
+package com.saidus.snapanonym.infrastructure;
 
 
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.net.Uri;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.saidus.snapanonym.presentation.model.Snap;
+import com.saidus.snapanonym.model.Snap;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,8 +40,7 @@ public class NetworkUtils {
 
     public NetworkUtils(Context context) {
         this.mContext = context;
-        mConnectivityManager = (ConnectivityManager)
-                mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        mConnectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
     public void getNetworkStatus(final OnNetworkListener onNetworkListerner) {
         //Get the connectivity manager, if its not null, get the network info(status)
@@ -103,12 +102,3 @@ public class NetworkUtils {
     }
 
 }
-
-
-
-
-
-
-
-
-

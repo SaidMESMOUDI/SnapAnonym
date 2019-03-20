@@ -1,4 +1,4 @@
-package com.saidus.snapanonym.presentation.model;
+package com.saidus.snapanonym.model;
 
 public class Picture extends Data {
 

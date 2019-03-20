@@ -1,4 +1,4 @@
-package com.saidus.snapanonym.presentation.infrastructure;
+package com.saidus.snapanonym.infrastructure;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.saidus.snapanonym.presentation.presentation.activity;
+package com.saidus.snapanonym.presentation.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -15,10 +15,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.saidus.snapanonym.R;
-import com.saidus.snapanonym.presentation.infrastructure.AppUtils;
-import com.saidus.snapanonym.presentation.model.Snap;
-import com.saidus.snapanonym.presentation.presentation.adapter.SnapAdapter;
-import com.saidus.snapanonym.presentation.presentation.loader.SnapsLoader;
+import com.saidus.snapanonym.infrastructure.AppUtils;
+import com.saidus.snapanonym.model.Snap;
+import com.saidus.snapanonym.presentation.adapter.SnapAdapter;
+import com.saidus.snapanonym.presentation.loader.SnapsLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +32,6 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 public class SnapListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Snap>> {
 

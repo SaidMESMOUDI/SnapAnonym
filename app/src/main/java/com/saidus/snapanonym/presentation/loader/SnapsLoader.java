@@ -1,13 +1,11 @@
-package com.saidus.snapanonym.presentation.presentation.loader;
+package com.saidus.snapanonym.presentation.loader;
 
 
 import android.content.Context;
 import android.location.Location;
 
-import com.saidus.snapanonym.presentation.infrastructure.AppUtils;
-import com.saidus.snapanonym.presentation.infrastructure.NetworkUtils;
-import com.saidus.snapanonym.presentation.model.SimpleLocation;
-import com.saidus.snapanonym.presentation.model.Snap;
+import com.saidus.snapanonym.infrastructure.NetworkUtils;
+import com.saidus.snapanonym.model.Snap;
 
 import java.util.List;
 
