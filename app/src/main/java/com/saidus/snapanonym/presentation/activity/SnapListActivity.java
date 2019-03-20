@@ -1,4 +1,4 @@
-package com.saidus.snapanonym.presentation.presentation.activity;
+package com.saidus.snapanonym.presentation.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -11,14 +11,15 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.saidus.snapanonym.R;
-import com.saidus.snapanonym.presentation.infrastructure.AppUtils;
-import com.saidus.snapanonym.presentation.model.Snap;
-import com.saidus.snapanonym.presentation.presentation.adapter.SnapAdapter;
-import com.saidus.snapanonym.presentation.presentation.loader.SnapsLoader;
+import com.saidus.snapanonym.infrastructure.AppUtils;
+import com.saidus.snapanonym.model.Snap;
+import com.saidus.snapanonym.presentation.adapter.SnapsAdapter;
+import com.saidus.snapanonym.presentation.loader.SnapsLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,22 +34,22 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import static com.saidus.snapanonym.infrastructure.AppUtils.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
 
 public class SnapListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Snap>> {
 
     List<Snap> mSnaps = new ArrayList<>();
     RecyclerView mRecyclerView;
-    SnapAdapter mAdapter;
+    SnapsAdapter mAdapter;
     RelativeLayout mSpinner;
     private Location mCurrentLocation;
-    private double mScope = 10.0;
-    public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 123;
-    private FusedLocationProviderClient mFusedLocationClient;
+    private double mScope = 3000.0;
 
+    private FusedLocationProviderClient mFusedLocationClient;
     private LoaderManager.LoaderCallbacks mContext;
+    private int requestCode;
+    private String[] permissions;
+    private int[] grantResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +57,17 @@ public class SnapListActivity extends AppCompatActivity implements LoaderManager
         setContentView(R.layout.activity_snap_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mContext = this;
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mSpinner = findViewById(R.id.spinner);
-        mRecyclerView=findViewById(R.id.recylcerid);
+        mRecyclerView=findViewById(R.id.snap_list_recyclerview);
         
-        mAdapter = new SnapAdapter(mSnaps,this);
+        mAdapter = new SnapsAdapter(mSnaps,this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //TODO load snaps using an asynctaskLoader
         initData();
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -75,12 +80,13 @@ public class SnapListActivity extends AppCompatActivity implements LoaderManager
         });
     }
 
-    private void initData(){
-        getSupportLoaderManager().initLoader(0,null,this);
+    private void initData() {
         mSpinner.setVisibility(View.VISIBLE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
             String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
             if (!AppUtils.hasPermissions(this, permissions)) {
 
                 // Permission is not granted
@@ -90,7 +96,7 @@ public class SnapListActivity extends AppCompatActivity implements LoaderManager
                     // this thread waiting for the user's response! After the user
                     // sees the explanation, try again to request the permission.
                 } else {
-                    AppUtils.requestPermissions(this,permissions,PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+                    AppUtils.requestPermissions(this, permissions, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
                     // No explanation needed; request the permission
                 }
             } else {
@@ -98,7 +104,28 @@ public class SnapListActivity extends AppCompatActivity implements LoaderManager
                 retrieveSnaps();
             }
         }
+    }
 
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        this.requestCode = requestCode;
+        this.permissions = permissions;
+        this.grantResults = grantResults;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //Permission granted, we can loadSnaps
+                    retrieveSnaps();
+                } else {
+                    //Permission not granted, go back to the home page
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+
+                }
+                return;
+            }
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -116,25 +143,6 @@ public class SnapListActivity extends AppCompatActivity implements LoaderManager
                     }
                 });
 
-    }
-
-    @SuppressLint("MissingPermission")
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //Permission granted, we can loadSnaps
-                    retrieveSnaps();
-                } else {
-                    //Permission not granted, go back to the home page
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-
-                }
-                return;
-            }
-        }
     }
 
     @NonNull

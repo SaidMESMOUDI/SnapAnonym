@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.circularreveal.CircularRevealRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_snap_anonym"
-    tools:context=".presentation.activity.MainActivity"
+    android:background="@drawable/anonymous_fashion_fedora"
+    tools:context="presentation.activity.MainActivity"
     android:fitsSystemWindows="true" >
 
     <TextView
@@ -35,6 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_16"
             android:background="@drawable/button_background"
+            android:drawableStart="@drawable/ic_explore_white_24dp"
+            android:drawableLeft="@drawable/ic_explore_white_24dp"
             android:contentDescription="@string/explore_snaps"
             android:padding="@dimen/default_margin"
             android:text="@string/explore_button_label"
@@ -50,6 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_16"
             android:background="@drawable/button_background"
+            android:drawableStart="@drawable/ic_share_white_24dp"
+            android:drawableLeft="@drawable/ic_share_white_24dp"
             android:contentDescription="@string/publish_a_snap"
             android:padding="@dimen/default_margin"
             android:text="@string/publish_button_label"
@@ -63,6 +68,4 @@
     </LinearLayout>
 
 
-
-
-</RelativeLayout>
+</com.google.android.material.circularreveal.CircularRevealRelativeLayout>
