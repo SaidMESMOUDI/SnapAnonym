@@ -5,4 +5,10 @@
     <dimen name="margin_24">24dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="padding_10">10dp</dimen>
+
+
+    <dimen name="app_default_padding">10dp</dimen>
+    <dimen name="app_default_margin_min">8dp</dimen>
+    <dimen name="comment_minified_max_height">50dp</dimen>
+
 </resources>

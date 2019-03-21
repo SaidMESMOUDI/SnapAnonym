@@ -11,4 +11,5 @@
     <string name="snap_image_content_description">snap image content description</string>
     <string name="snap_info_sample">yard away</string>
     <string name="snap_action_comment_info_sample">34K</string>
+    <string name="what_is_this_picture_hint">what is this picture hint</string>
 </resources>
